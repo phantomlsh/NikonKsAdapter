@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="NikonKsAdapter" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="NikonKsAdapter" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNIKONKSADAPTER_EXPORTS" />
+					<Add directory="C:/Users/andrew/Desktop/mm/3rdparty/NikonKsCam" />
+				</Compiler>
+				<Linker>
+					<Add library="KsCam.lib" />
+					<Add directory="C:/Users/andrew/Desktop/mm/3rdparty/NikonKsCam" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+			<Target title="Debug x64">
+				<Option output="NikonKsAdapter" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNIKONKSADAPTER_EXPORTS" />
+					<Add directory="C:/Users/andrew/Desktop/mm/3rdparty/NikonKsCam" />
+				</Compiler>
+				<Linker>
+					<Add library="KsCam.lib" />
+					<Add directory="C:/Users/andrew/Desktop/mm/3rdparty/NikonKsCam" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+			<Target title="Release x64">
+				<Option output="NikonKsAdapter" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNIKONKSADAPTER_EXPORTS" />
+					<Add directory="$(WindowsSdkDir)/include" />
+					<Add directory="$(WindowsSdkDir)include/um" />
+					<Add directory="$(WindowsSdkDir)include/shared" />
+					<Add directory="$(VCInstallDir)include" />
+					<Add directory="$(SolutionDir)/DeviceAdapters/NikonKsAdapter/SDK" />
+					<Add directory="$(MM_MMDEVICE_INCLUDEDIR)" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(SolutionDir)/DeviceAdapters/NikonKsAdapter/SDK/lib_x64/KsCam" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="NikonKsAdapter" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNIKONKSADAPTER_EXPORTS" />
+					<Add directory="$(WindowsSdkDir)/include" />
+					<Add directory="$(VCInstallDir)include" />
+					<Add directory="$(SolutionDir)/SDK" />
+				</Compiler>
+				<Linker>
+					<Add library="KsCam.lib" />
+					<Add directory="$(SolutionDir)/SDK/lib_x86" />
+					<Add directory="$(LibraryPath)" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="../SDK/KsCam.h" />
+		<Unit filename="../SDK/KsCamCommand.h" />
+		<Unit filename="../SDK/KsCamEvent.h" />
+		<Unit filename="../SDK/KsCamFeature.h" />
+		<Unit filename="../SDK/KsCamImage.h" />
+		<Unit filename="NikonKsCam.cpp" />
+		<Unit filename="NikonKsCam.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
