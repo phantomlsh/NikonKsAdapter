@@ -95,7 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(SolutionDir)\DeviceAdapters\NikonKsAdapter\SDK\lib_x64\KsCam;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(VCInstallDir)include;$(SolutionDir)SDK;T:\VS\Community\VC\Tools\MSVC\14.27.29110\include;T:\Windows Kits\10\Include\10.0.19041.0\cppwinrt;T:\Windows Kits\10\Include\10.0.19041.0\shared;T:\Windows Kits\10\Include\10.0.19041.0\ucrt;T:\Windows Kits\10\Include\10.0.19041.0\um;T:\Windows Kits\10\Include\10.0.19041.0\winrt</IncludePath>
+    <IncludePath>$(WindowsSDK_IncludePath);$(VC_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
