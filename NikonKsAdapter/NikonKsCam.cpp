@@ -574,7 +574,15 @@ int NikonKsCam::CreateKsProperty(lx_uint32 FeatureId, CPropertyAction *pAct)
         LogMessage("CreateKs Exposure (Shiheng)");
         nRet = CreateFloatProperty(MM::g_Keyword_Exposure, 10.0, false);
         assert(nRet == DEVICE_OK);
-        SetPropertyLimits(MM::g_Keyword_Exposure, 0.0, 10000.0);
+        SetPropertyLimits(MM::g_Keyword_Exposure, 0.0, 120000.0);
+        return nRet;
+    }
+    if (featureValue->uiFeatureId == eGain)
+    {
+        LogMessage("CreateKs Gain (Shiheng)");
+        nRet = CreateIntegerProperty(MM::g_Keyword_Gain, 100, false);
+        assert(nRet == DEVICE_OK);
+        SetPropertyLimits(MM::g_Keyword_Gain, 100, 6400);
         return nRet;
     }
     // Shiheng end
@@ -587,17 +595,7 @@ int NikonKsCam::CreateKsProperty(lx_uint32 FeatureId, CPropertyAction *pAct)
             nRet |= SetPropertyLimits(strTitle, featureDesc->stRange.stMin.i32Value, featureDesc->stRange.stMax.i32Value);
             break;
         case	evrt_uint32:
-            if(featureValue->uiFeatureId == eExposureTime)
-            {
-                strTitle = const_cast<char*>(MM::g_Keyword_Exposure);
-                CreateProperty(strTitle, "23.3", MM::Float, false, pAct);
-                SetPropertyLimits(strTitle, featureDesc->stRange.stMin.ui32Value/1000, featureDesc->stRange.stMax.ui32Value/1000);
-                LogMessage("CreateKs Exposure \n");
-                nRet = CreateFloatProperty(MM::g_Keyword_Exposure, 10.0, false);
-                assert(nRet == DEVICE_OK);
-                SetPropertyLimits(MM::g_Keyword_Exposure, 0.0, 10000.0);
-            }
-            else if (featureValue->uiFeatureId == eExposureTimeLimit)
+            if (featureValue->uiFeatureId == eExposureTimeLimit)
             {
                 CreateProperty(strTitle, "", MM::Float, false, pAct);
                 SetPropertyLimits(strTitle, featureDesc->stRange.stMin.ui32Value/1000, featureDesc->stRange.stMax.ui32Value/1000);
