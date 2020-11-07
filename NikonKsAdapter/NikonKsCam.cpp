@@ -574,7 +574,15 @@ int NikonKsCam::CreateKsProperty(lx_uint32 FeatureId, CPropertyAction *pAct)
         LogMessage("CreateKs Exposure (Shiheng)");
         nRet = CreateFloatProperty(MM::g_Keyword_Exposure, 10.0, false);
         assert(nRet == DEVICE_OK);
-        SetPropertyLimits(MM::g_Keyword_Exposure, 0.0, 10000.0);
+        SetPropertyLimits(MM::g_Keyword_Exposure, 0.0, 120000.0);
+        return nRet;
+    }
+    if (featureValue->uiFeatureId == eGain)
+    {
+        LogMessage("CreateKs Gain (Shiheng)");
+        nRet = CreateIntegerProperty(MM::g_Keyword_Gain, 100, false);
+        assert(nRet == DEVICE_OK);
+        SetPropertyLimits(MM::g_Keyword_Gain, 100, 6400);
         return nRet;
     }
     // Shiheng end
@@ -587,17 +595,7 @@ int NikonKsCam::CreateKsProperty(lx_uint32 FeatureId, CPropertyAction *pAct)
             nRet |= SetPropertyLimits(strTitle, featureDesc->stRange.stMin.i32Value, featureDesc->stRange.stMax.i32Value);
             break;
         case	evrt_uint32:
-            if(featureValue->uiFeatureId == eExposureTime)
-            {
-                strTitle = const_cast<char*>(MM::g_Keyword_Exposure);
-                CreateProperty(strTitle, "23.3", MM::Float, false, pAct);
-                SetPropertyLimits(strTitle, featureDesc->stRange.stMin.ui32Value/1000, featureDesc->stRange.stMax.ui32Value/1000);
-                LogMessage("CreateKs Exposure \n");
-                nRet = CreateFloatProperty(MM::g_Keyword_Exposure, 10.0, false);
-                assert(nRet == DEVICE_OK);
-                SetPropertyLimits(MM::g_Keyword_Exposure, 0.0, 10000.0);
-            }
-            else if (featureValue->uiFeatureId == eExposureTimeLimit)
+            if (featureValue->uiFeatureId == eExposureTimeLimit)
             {
                 CreateProperty(strTitle, "", MM::Float, false, pAct);
                 SetPropertyLimits(strTitle, featureDesc->stRange.stMin.ui32Value/1000, featureDesc->stRange.stMax.ui32Value/1000);
@@ -960,6 +958,26 @@ int NikonKsCam::Shutdown()
 }
 
 /**
+* Overwrite the SetProperty from CDeviceBase
+* set some key features for the camera
+* By Shiheng
+*/
+int NikonKsCam::SetProperty(const char* name, const char* value)
+{
+    if (!std::strcmp(name, MM::g_Keyword_Exposure)) { // exposure
+        LogMessage("SetExposure (Shiheng)");
+        vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eExposureTime]].stVariant.ui32Value = (int)(atof(value) * 1000);
+        SetFeature(eExposureTime);
+    }
+    if (!std::strcmp(name, MM::g_Keyword_Gain)) { // gain
+        LogMessage("SetGain (Shiheng)");
+        vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eGain]].stVariant.ui32Value = atoi(value);
+        SetFeature(eGain);
+    }
+    return CDeviceBase::SetProperty(name, value);
+}
+
+/**
 * Performs exposure and grabs a single image.
 * This function should block during the actual exposure and return immediately afterwards
 * (i.e., before readout).  This behavior is needed for proper synchronization with the shutter.
@@ -969,11 +987,6 @@ int NikonKsCam::SnapImage()
 {
     //Determine exposureLength so we know a reasonable time to wait for frame arrival
     auto exposureLength = vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eExposureTime]].stVariant.ui32Value / 1000;
-    // Shiheng start
-    char temp[100];
-    sprintf(temp, "ExposureLength %d (Shiheng)", exposureLength);
-    LogMessage(temp);
-    // Shiheng end
     char buf[MM::MaxStrLength];
     //Determine current trigger mode
     GetProperty(ConvFeatureIdToName(eTriggerMode), buf);
@@ -1113,10 +1126,6 @@ double NikonKsCam::GetExposure() const
 */
 void NikonKsCam::SetExposure(double exp)
 {
-    // Shiheng start
-    vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eExposureTime]].stVariant.ui32Value = (int)(exp * 1000);
-    SetFeature(eExposureTime);
-    // Shiheng end
     SetProperty(MM::g_Keyword_Exposure, CDeviceUtils::ConvertToString(exp));
     GetCoreCallback()->OnExposureChanged(this, exp);
 }
