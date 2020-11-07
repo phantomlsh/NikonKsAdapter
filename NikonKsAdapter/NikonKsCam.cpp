@@ -958,6 +958,26 @@ int NikonKsCam::Shutdown()
 }
 
 /**
+* Overwrite the SetProperty from CDeviceBase
+* set some key features for the camera
+* By Shiheng
+*/
+int NikonKsCam::SetProperty(const char* name, const char* value)
+{
+    if (!std::strcmp(name, MM::g_Keyword_Exposure)) { // exposure
+        LogMessage("SetExposure (Shiheng)");
+        vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eExposureTime]].stVariant.ui32Value = (int)(atof(value) * 1000);
+        SetFeature(eExposureTime);
+    }
+    if (!std::strcmp(name, MM::g_Keyword_Gain)) { // gain
+        LogMessage("SetGain (Shiheng)");
+        vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eGain]].stVariant.ui32Value = atoi(value);
+        SetFeature(eGain);
+    }
+    return CDeviceBase::SetProperty(name, value);
+}
+
+/**
 * Performs exposure and grabs a single image.
 * This function should block during the actual exposure and return immediately afterwards
 * (i.e., before readout).  This behavior is needed for proper synchronization with the shutter.
@@ -967,11 +987,6 @@ int NikonKsCam::SnapImage()
 {
     //Determine exposureLength so we know a reasonable time to wait for frame arrival
     auto exposureLength = vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eExposureTime]].stVariant.ui32Value / 1000;
-    // Shiheng start
-    char temp[100];
-    sprintf(temp, "ExposureLength %d (Shiheng)", exposureLength);
-    LogMessage(temp);
-    // Shiheng end
     char buf[MM::MaxStrLength];
     //Determine current trigger mode
     GetProperty(ConvFeatureIdToName(eTriggerMode), buf);
@@ -1111,10 +1126,6 @@ double NikonKsCam::GetExposure() const
 */
 void NikonKsCam::SetExposure(double exp)
 {
-    // Shiheng start
-    vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eExposureTime]].stVariant.ui32Value = (int)(exp * 1000);
-    SetFeature(eExposureTime);
-    // Shiheng end
     SetProperty(MM::g_Keyword_Exposure, CDeviceUtils::ConvertToString(exp));
     GetCoreCallback()->OnExposureChanged(this, exp);
 }

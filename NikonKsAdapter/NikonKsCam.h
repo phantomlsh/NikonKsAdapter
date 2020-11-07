@@ -60,6 +60,7 @@ public:
 	int Initialize();
 	int Shutdown();
 	void GetName(char* name) const;
+	int SetProperty(const char* name, const char* value);
 
 	// MMCamera API
 	// ------------
