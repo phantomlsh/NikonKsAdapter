@@ -6,14 +6,36 @@ A MicroManager 1.4 Device Adapter for the Nikon Qi2/Ri2 cameras.
 
 **The stability is not garanteed.**
 
-**The adapter is still under development. Therefore, no release version is provided.**
+**The latest build for x64 system is in** `/build`
 
-## Features
+## Added Features
 
 - [x] Exposure Control
-- [ ] Gain Control
+- [x] Gain Control
+- [x] Image Format
+- [x] ROI (supported by format)
 
-## Guide
+## Guide for Users
+
+### Setup
+
+Copy the built dll file to the root directory of Micro-Manager 1.4 software.
+
+Install the Nikon's `KsCamInstaller_v2_1_2_3_x64`, and after intalling it, copy `KsCam.dll` from the installation directory to the root directory of Micro-Manager 1.4 Software as well.
+
+Hopefully, you can now setup the NikonKsAdapter normally in the Micro-Manager 1.4
+
+### Notes
+
+Exposure can be controlled by the panel as well as the group/preset.
+
+Gain, Format and ROI Position can be controlled by group/preset.
+
+> Format and ROI are only adapted for Qi2 Camera.
+
+When selecting a ROI format, you can change the frame position by setting `ROI Position X` and `ROI Position Y`
+
+## Guide for Developers
 
 > This guide was created on 2020.11.03, with the operating system Windows 10.
 
@@ -66,11 +88,3 @@ Unfortunately, for most chance, you will not be able to successfully compile the
 - Any other not found: please google it and see if it can be solved by change properties -> `VC++ Directories` -> `Include Directories`
 
 Compile for **Release | x64**, and hopefully you can find the built file at `/micromanager/build/Release/x64/mmgr_dal_NikonKsAdapter.dll`
-
-### Step 5: Deploy
-
-Copy the built dll file to the root directory of Micro-Manager 1.4 software.
-
-Install the Nikon's `KsCamInstaller_v2_1_2_3_x64`, and after intalling it, copy `KsCam.dll` from the installation directory to the root directory of Micro-Manager 1.4 Software as well.
-
-Hopefully, you can now setup the NikonKsAdapter normally in the Micro-Manager 1.4
