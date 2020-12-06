@@ -585,6 +585,16 @@ int NikonKsCam::CreateKsProperty(lx_uint32 FeatureId, CPropertyAction *pAct)
         SetPropertyLimits(MM::g_Keyword_Gain, 100, 6400);
         return nRet;
     }
+    if (featureValue->uiFeatureId == eFormat)
+    {
+        LogMessage("CreateKs Format (Shiheng)");
+        nRet |= CreateProperty(strTitle, "", MM::String, false, pAct);
+        for (auto formatIndex = 0; formatIndex < featureDesc->uiListCount; formatIndex++)
+        {
+            wcstombs(strWork, reinterpret_cast<wchar_t const*>(featureDesc->stFormatList[formatIndex].wszComment), CAM_FEA_COMMENT_MAX);
+            nRet |= AddAllowedValue(strTitle, strWork);
+        }
+    }
     // Shiheng end
 
     switch (featureDesc_[featureIndex].eFeatureDescType) {
@@ -856,6 +866,32 @@ void NikonKsCam::UpdateImageSettings()
         imageWidth_=536;
         imageHeight_=536;
         break;
+    // Shiheng start
+    case ecfs22p2136x2136:
+        imageWidth_ = 2136;
+        imageHeight_ = 2136;
+        break;
+    case ecfs22p712x712:
+        imageWidth_ = 712;
+        imageHeight_ = 712;
+        break;
+    case ecfs25p2424x2424:
+        imageWidth_ = 2424;
+        imageHeight_ = 2424;
+        break;
+    case ecfs25p808x808:
+        imageWidth_ = 808;
+        imageHeight_ = 808;
+        break;
+    case ecfs17p1608x1608:
+        imageWidth_ = 1608;
+        imageHeight_ = 1608;
+        break;
+    case ecfs17p536x536:
+        imageWidth_ = 536;
+        imageHeight_ = 536;
+        break;
+    // Shiheng end
     }
 
     /* Update the buffer to have the proper width height and depth */
@@ -973,6 +1009,9 @@ int NikonKsCam::SetProperty(const char* name, const char* value)
         LogMessage("SetGain (Shiheng)");
         vectFeatureValue_.pstFeatureValue[mapFeatureIndex_[eGain]].stVariant.ui32Value = atoi(value);
         SetFeature(eGain);
+    }
+    if (!std::strcmp(name, "Format")) { // format
+        LogMessage("SetFormat (Shiheng)");
     }
     return CDeviceBase::SetProperty(name, value);
 }

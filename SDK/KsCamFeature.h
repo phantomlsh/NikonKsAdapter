@@ -170,6 +170,14 @@ enum ECamFormatMode
 	ecfm1608x1608	=	5,		//	Full
 	ecfm804x804		=	6,		//		ROI
 	ecfm536x536		=	7,		//		1/3 Average
+	// Shiheng start
+	ecfs22p2136x2136	=	8,
+	ecfs22p712x712	=	9,
+	ecfs25p2424x2424	=	10,
+	ecfs25p808x808	=	11,
+	ecfs17p1608x1608	=	12,
+	ecfs17p536x536	=	13,
+	// Shiheng end
 };
 
 enum ECamTriggerMode
