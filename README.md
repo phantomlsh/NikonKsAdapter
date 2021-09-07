@@ -6,7 +6,7 @@ A MicroManager 1.4 Device Adapter for the Nikon Qi2/Ri2 cameras.
 
 **The stability is not garanteed.**
 
-**The latest build for x64 system is in** `/build`
+> For MicroManger 2.0.0, just delete Line 28&29 in `NikonKsCam.cpp`. There is a release for MicroManger 2.0 x64.
 
 ## Added Features
 
