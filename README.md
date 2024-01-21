@@ -6,7 +6,7 @@ A MicroManager 1.4 Device Adapter for the Nikon Qi2/Ri2 cameras.
 
 **The stability is not garanteed.**
 
-> For MicroManger 2.0.0, just delete Line 28&29 in `NikonKsCam.cpp`. There is a release for MicroManger 2.0 x64.
+> For MicroManger 2.0.0, the built adapter `mmgr_dal_NikonKsAdapter.dll` should be capable to run in MicroManager 2. If not, try to recompile it with deleting the Line 28&29 in `NikonKsCam.cpp`.
 
 ## Added Features
 
@@ -19,9 +19,9 @@ A MicroManager 1.4 Device Adapter for the Nikon Qi2/Ri2 cameras.
 
 ### Setup
 
-Copy the built dll file to the root directory of Micro-Manager 1.4 software.
+Copy the built dll file `mmgr_dal_NikonKsAdapter.dll` to the root directory of Micro-Manager 1.4 (or 2) software. The file can be found in the release of this repository.
 
-Install the Nikon's `KsCamInstaller_v2_1_2_3_x64`, and after intalling it, copy `KsCam.dll` from the installation directory to the root directory of Micro-Manager 1.4 Software as well.
+Install the Nikon's `KsCamInstaller_v2_1_2_3_x64`, and after intalling it, copy `KsCam.dll` from the installation directory to the root directory of Micro-Manager Software as well.
 
 Hopefully, you can now setup the NikonKsAdapter normally in the Micro-Manager 1.4
 
